@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Banner from './Components/Banner'
+import Card from './Components/Card'
 import Navbar from './Components/Navbar'
 
 export default function Home() {
@@ -18,6 +19,16 @@ export default function Home() {
        title="Clifford the red dog"
        subTitle="a very cute dog"
        imgUrl="/static/clifford.jpg"
+      />
+      <Card
+        imgUrl ="/static/clifford.jpg"
+        size="large"
+      />
+      <Card
+      />
+      <Card
+        imgUrl ="/static/clifford.jpg"
+        size="small"
       />
     </div>
   )
