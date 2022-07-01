@@ -4,9 +4,11 @@ import Styles from '../../styles/Card.module.css';
 import { useState } from 'react';
 import { motion } from "framer-motion"
 
-const Card = ({imgUrl ="/static/clifford.jpg",size="medium"}) => {
+const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id}) => {
 
     const [imageSrc,setImageSrc] = useState(imgUrl)
+
+    const scale = id === 1 ? {scaleY: 1.1} : {scale: 1.1}; 
 
     const cardMaps ={
         small:Styles.smItem,
@@ -19,7 +21,7 @@ const Card = ({imgUrl ="/static/clifford.jpg",size="medium"}) => {
     }
     return (
         <div>
-            <motion.div  whileHover={{ scale: 1.2 }} className={`${cardMaps[size]} ${Styles.imgMotionWrapper}`}>
+            <motion.div  whileHover={{ ...scale }} className={`${cardMaps[size]} ${Styles.imgMotionWrapper}`}>
                 <Image
                     src={imageSrc}
                     layout="fill"

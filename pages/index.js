@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import Banner from './Components/Banner'
 import Card from './Components/Card'
 import Navbar from './Components/Navbar'
+import SectionCard from './Components/SectionCard'
 
 export default function Home() {
   return (
@@ -20,16 +21,11 @@ export default function Home() {
        subTitle="a very cute dog"
        imgUrl="/static/clifford.jpg"
       />
-      <Card
-        imgUrl ="/static/clifford.jpg"
-        size="large"
-      />
-      <Card
-      />
-      <Card
-        imgUrl ="/static/clifford.jpg"
-        size="small"
-      />
+      <div className={styles.sectionWrapper}>
+       <SectionCard title={"Disney"} /> 
+      </div>
+     
+      
     </div>
   )
 }
