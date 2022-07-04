@@ -4,19 +4,10 @@ import Banner from './Components/Banner'
 import Card from './Components/Card'
 import Navbar from './Components/Navbar'
 import SectionCard from './Components/SectionCard'
+import { getVideos } from './../libs/videos';
 
 export default function Home() {
-  const disneyVideos =[
-    {
-      imgUrl:'/static/clifford.jpg',
-    },
-    {
-      imgUrl:'/static/clifford.jpg',
-    },
-    {
-      imgUrl:'/static/clifford.jpg',
-    },
-  ]
+  const disneyVideos = getVideos()
   return (
     <div className={styles.container}>
       <Head>
