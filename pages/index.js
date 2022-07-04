@@ -6,6 +6,17 @@ import Navbar from './Components/Navbar'
 import SectionCard from './Components/SectionCard'
 
 export default function Home() {
+  const disneyVideos =[
+    {
+      imgUrl:'/static/clifford.jpg',
+    },
+    {
+      imgUrl:'/static/clifford.jpg',
+    },
+    {
+      imgUrl:'/static/clifford.jpg',
+    },
+  ]
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +33,10 @@ export default function Home() {
        imgUrl="/static/clifford.jpg"
       />
       <div className={styles.sectionWrapper}>
-       <SectionCard title={"Disney"} /> 
+       <SectionCard title={"Disney"} videos={disneyVideos} 
+       size="large"/> 
+       <SectionCard title={"Disney"} videos={disneyVideos} 
+       size="medium"/> 
       </div>
      
       
