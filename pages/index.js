@@ -6,8 +6,16 @@ import Navbar from './Components/Navbar'
 import SectionCard from './Components/SectionCard'
 import { getVideos } from './../libs/videos';
 
-export default function Home() {
-  const disneyVideos = getVideos()
+
+export async function getServerSideProps(){
+  
+  const disneyVideos = await getVideos()
+
+  return {props:{disneyVideos}}
+}
+
+export default function Home({disneyVideos}) {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -29,8 +37,6 @@ export default function Home() {
        <SectionCard title={"Disney"} videos={disneyVideos} 
        size="medium"/> 
       </div>
-     
-      
     </div>
   )
 }
