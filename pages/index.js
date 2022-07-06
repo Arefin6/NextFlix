@@ -1,23 +1,27 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Banner from './Components/Banner'
-import Navbar from './Components/Navbar'
-import SectionCard from './Components/SectionCard'
-import { getVideos, getPopularVideos } from './../libs/videos';
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import Banner from "./Components/Banner";
+import Navbar from "./Components/Navbar";
+import SectionCard from "./Components/SectionCard";
+import { getVideos, getPopularVideos } from "./../libs/videos";
 
-
-export async function getServerSideProps(){
-  
-  const disneyVideos = await getVideos('disney trailer');
-  const productivityVideos = await getVideos('productivity');
-  const travelVideos = await getVideos('travel');
+export async function getServerSideProps() {
+  const disneyVideos = await getVideos("disney trailer");
+  const productivityVideos = await getVideos("productivity");
+  const travelVideos = await getVideos("travel");
   const popularVideos = await getPopularVideos();
 
-  return {props:{disneyVideos,productivityVideos,travelVideos,popularVideos}}
+  return {
+    props: { disneyVideos, productivityVideos, travelVideos, popularVideos },
+  };
 }
 
-export default function Home({disneyVideos,productivityVideos,travelVideos,popularVideos}) {
-
+export default function Home({
+  disneyVideos,
+  productivityVideos,
+  travelVideos,
+  popularVideos,
+}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -26,26 +30,23 @@ export default function Home({disneyVideos,productivityVideos,travelVideos,popul
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
-      <Navbar
-       username={"arefin@gmail.com"}
-      />
-      <Banner
-       title="Clifford the red dog"
-       subTitle="a very cute dog"
-       imgUrl="/static/clifford.jpg"
-      />
-      <div className={styles.sectionWrapper}>
-       <SectionCard title={"Disney"} videos={disneyVideos} 
-       size="large"/> 
-       <SectionCard title={"Travel"} videos={travelVideos} 
-       size="small"/> 
-        <SectionCard title={"Productivity"} videos={productivityVideos} 
-       size="medium"/> 
-        <SectionCard title={"Popular"} videos={popularVideos} 
-       size="small"/> 
-      </div>   
+        <Navbar username={"arefin@gmail.com"} />
+        <Banner
+          title="Clifford the red dog"
+          subTitle="a very cute dog"
+          imgUrl="/static/clifford.jpg"
+        />
+        <div className={styles.sectionWrapper}>
+          <SectionCard title={"Disney"} videos={disneyVideos} size="large" />
+          <SectionCard title={"Travel"} videos={travelVideos} size="small" />
+          <SectionCard
+            title={"Productivity"}
+            videos={productivityVideos}
+            size="medium"
+          />
+          <SectionCard title={"Popular"} videos={popularVideos} size="small" />
+        </div>
       </div>
-      
     </div>
-  )
+  );
 }
