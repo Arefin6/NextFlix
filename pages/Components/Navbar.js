@@ -27,17 +27,18 @@ const Navbar = ({ username }) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Link className={styles.logoLink} href="/">
-          <div className={styles.logoWrapper}>
-            <Image
-             src="/static/Netflix.svg"
-             alt="Netfix Iogo"
-             width={144}
-             height={34}
-            />
-          </div>
-        </Link>
-
+        <header>
+          <Link className={styles.logoLink} href="/">
+            <div className={styles.logoWrapper}>
+              <Image
+              src="/static/Netflix.svg"
+              alt="Netfix Iogo"
+              width={144}
+              height={34}
+              />
+            </div>
+          </Link>
+        </header>
         <ul className={styles.navItems}>
           <li className={styles.navItem} onClick={handleNavigateToHome}>Home</li>
           <li className={styles.navItem2} onClick={handleNavigateToMYList}>My List</li>
