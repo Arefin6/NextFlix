@@ -4,6 +4,7 @@ import Banner from "./Components/Banner";
 import Navbar from "./Components/Navbar";
 import SectionCard from "./Components/SectionCard";
 import { getVideos, getPopularVideos } from "./../libs/videos";
+import { magic } from "../libs/magic-Client";
 
 export async function getServerSideProps() {
   const disneyVideos = await getVideos("disney trailer");
@@ -31,6 +32,7 @@ export default function Home({
       </Head>
       <div className={styles.main}>
         <Navbar username={"arefin@gmail.com"} />
+         {console.log(magic)}
         <Banner
           title="Clifford the red dog"
           subTitle="a very cute dog"

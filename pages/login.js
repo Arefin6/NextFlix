@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Login.module.css";
+import Router from "next/dist/server/router";
+import { useRouter } from 'next/router';
 
 const Login = () => {
    
   const [email,setEmail] = useState("")
   const [msg,setMsg] = useState("")
+
+  const router = useRouter();
 
   const handleEmailChange = (e) =>{
     setMsg("")
@@ -17,7 +21,12 @@ const Login = () => {
   const handleLoginWithEmail = (e) => {
     e.preventDefault();
     if(email){
-      // do 
+      if(email ==="arefinhossain3@gmail.com"){
+        router.push('/')
+      }
+      else{
+        setMsg("Something Went Wrong login in!");
+      }
     }
     else{
       setMsg("Enter a valid Email Address")
