@@ -1,15 +1,16 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Login.module.css";
-import Router from "next/dist/server/router";
 import { useRouter } from 'next/router';
+import { magic } from "../libs/magic-Client";
 
 const Login = () => {
    
   const [email,setEmail] = useState("")
   const [msg,setMsg] = useState("")
+  const [isLoading,setLoading] = useState(false)
 
   const router = useRouter();
 
@@ -18,17 +19,43 @@ const Login = () => {
     setEmail(e.target.value)
   }
 
-  const handleLoginWithEmail = (e) => {
+   useEffect(()=>{
+     const handleComplete = () =>{
+      setLoading(false)
+     }
+     router.events.on("routeChangeComplete",handleComplete)
+     router.events.on("routeChangeError",handleComplete)
+     return () =>{
+      router.events.off("routeChangeComplete",handleComplete)
+      router.events.off("routeChangeError",handleComplete)
+     }
+    
+   },[router])
+
+  const handleLoginWithEmail = async(e) => {
     e.preventDefault();
     if(email){
       if(email ==="arefinhossain3@gmail.com"){
-        router.push('/')
+        setLoading(true)
+       try {
+        const didToken = await magic.auth.loginWithMagicLink({email})
+        console.log({didToken})
+        if(didToken){
+          router.push('/')
+        }
+       } catch (error) {
+        setLoading(false)
+        console.error(error)
+       }
+      
       }
       else{
+        setLoading(false)
         setMsg("Something Went Wrong login in!");
       }
     }
     else{
+      setLoading(false)
       setMsg("Enter a valid Email Address")
     }
   };
@@ -65,7 +92,7 @@ const Login = () => {
           />
           <p className={styles.userMsg}>{msg}</p>
           <button onClick={handleLoginWithEmail} className={styles.loginBtn}>
-            Sign In
+            {isLoading ?"Loading...":"Sign in"}
           </button>
         </div>
       </main>
