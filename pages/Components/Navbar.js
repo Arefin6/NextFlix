@@ -1,15 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {React,useState} from "react";
+import {React,useEffect,useState} from "react";
 import styles from "../../styles/nav.module.css";
+import { magic } from './../../libs/magic-Client';
 
 
-const Navbar = ({ username }) => {
+const Navbar = () => {
     const router = useRouter()
     const [showNavigation,setShowNavigation] = useState(false)
+    const [userName,setUserName] = useState('')
 
-    const handleSignout = () =>{
+
+    useEffect(()=>{
+          const getUserData = async() =>{
+            try {
+              const {email} = await magic.user.getMetadata()
+              if(email){
+                setUserName(email)
+              }
+             } catch (error) {
+              console.error("Error Retriving User Email",error)
+             }
+          }
+          getUserData()
+    },[]) 
+
+    const handleSignOut = async() =>{
+      try {
+        await magic.user.logout()
+        console.log(await magic.user.isLoggedIn())
+        router.push('/login')
+      } catch (error) {
+        console.error("Error Logout",error)
+        router.push('/login')
+      }
 
     }
     const handleNavigateToHome = (e) =>{
@@ -46,7 +71,7 @@ const Navbar = ({ username }) => {
         <nav className={styles.navContainer}>
           <div>
             <button className={styles.usernameBtn} onClick={handleShowNavigation}>
-              <p className={styles.username}>{username}</p>
+              <p className={styles.username}>{userName}</p>
               <Image
                src="/static/expand_more.svg"
                alt="expand Iogo"
@@ -57,11 +82,9 @@ const Navbar = ({ username }) => {
             { showNavigation && (
             <div className={styles.navDropdown}>
               <div>
-                <Link href={'/login'}>
-                  <a className={styles.linkName} onClick={handleSignout}>
+                  <a className={styles.linkName} onClick={handleSignOut}>
                     Sign out
                   </a>
-                </Link>
                 <div className={styles.lineWrapper}></div>
               </div>
             </div>
