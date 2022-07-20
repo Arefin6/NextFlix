@@ -3,8 +3,9 @@ import React from 'react';
 import Styles from '../../styles/Card.module.css';
 import { useState } from 'react';
 import { motion } from "framer-motion"
+import Link from 'next/link';
 
-const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id}) => {
+const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id,videoId}) => {
 
     const [imageSrc,setImageSrc] = useState(imgUrl)
 
@@ -22,13 +23,16 @@ const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id}) => {
     return (
         <div>
             <motion.div  whileHover={{ ...scale }} className={`${cardMaps[size]} ${Styles.imgMotionWrapper}`}>
-                <Image
-                    src={imageSrc}
-                    layout="fill"
-                    alt="img"
-                    onError={handleError}
-                    className={Styles.cardImg}
-                />
+                <Link href={`video/${videoId}`}>
+                    <Image
+                        src={imageSrc}
+                        layout="fill"
+                        alt="img"
+                        onError={handleError}
+                        className={Styles.cardImg}
+                    />
+                </Link>
+               
             </motion.div>
             
         </div>

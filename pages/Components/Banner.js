@@ -7,7 +7,7 @@ const Banner = (props) => {
   const router = useRouter();
 
   const handleOnPlay = () => {
-    // router.push(`video/${videoId}`);
+    router.push(`video/${videoId}`);
   };
   return (
     <div className={styles.container}>
