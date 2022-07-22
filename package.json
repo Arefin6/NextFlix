@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.3.1",
     "framer-motion": "^6.3.16",
     "magic-sdk": "^8.1.1",
     "next": "12.1.6",
