@@ -23,7 +23,6 @@ const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id,videoId}) => {
     return (
         <div>
             <motion.div  whileHover={{ ...scale }} className={`${cardMaps[size]} ${Styles.imgMotionWrapper}`}>
-                <Link href={`video/${videoId}`}>
                     <Image
                         src={imageSrc}
                         layout="fill"
@@ -31,7 +30,6 @@ const Card = ({imgUrl ="/static/clifford.jpg",size="medium",id,videoId}) => {
                         onError={handleError}
                         className={Styles.cardImg}
                     />
-                </Link>
                
             </motion.div>
             
