@@ -4,6 +4,7 @@ import Banner from "./Components/Banner";
 import Navbar from "./Components/Navbar";
 import SectionCard from "./Components/SectionCard";
 import { getVideos, getPopularVideos } from "./../libs/videos";
+import {startFetchMyQuery} from './../libs/db/hasura';
 
 
 export async function getServerSideProps() {
@@ -17,12 +18,15 @@ export async function getServerSideProps() {
   };
 }
 
+startFetchMyQuery()
+
 export default function Home({
   disneyVideos,
   productivityVideos,
   travelVideos,
   popularVideos,
-}) {
+})
+{
   return (
     <div className={styles.container}>
       <Head>
