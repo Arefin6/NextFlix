@@ -61,6 +61,6 @@ async function fetchGraphQL(operationsDoc, operationName, variables) {
     }
   
     // do something great with this precious data
-    console.log(data);
+    // console.log(data);
   }
   
