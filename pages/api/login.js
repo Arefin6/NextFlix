@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 import {magicAdmin} from '../../libs/magic';
 import jwt from "jsonwebtoken";
+import { isNewUSer } from '../../libs/db/hasura';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req,res){
    if(req.method === "POST"){
@@ -23,9 +24,9 @@ export default async function (req,res){
       process.env.JWT_SECRET
     );
 
-    console.log({token})
+    const isNewUserQuery = await isNewUSer(token,metaData.issuer) 
 
-     res.send({done:true})
+     res.send({done:true,isNewUserQuery})
    } catch (error) {
     console.error("Error Logging In",error);
     res.status(500).send({done:false})
