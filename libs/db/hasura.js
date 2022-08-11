@@ -1,4 +1,4 @@
-export async function createNewUser(token,metadata){
+async function createNewUser(token,metadata){
   const operationsDoc = `
   mutation createNewUser($issuer: String!, $email: String!, $publicAddress: String!) {
     insert_users(objects: {email: $email, issuer: $issuer, publicAddress: $publicAddress}) {
@@ -13,13 +13,13 @@ export async function createNewUser(token,metadata){
   const { issuer, email, publicAddress } = metadata;
   const response =  await queryHasuraGQL(operationsDoc, "createNewUser",{ email, issuer,publicAddress},token);
    
-  console.log({response})
+  console.log(response)
   return response
 
 }
 
 
-export async function isNewUSer(token,issuer){
+async function isNewUser(token,issuer){
   const operationsDoc = `
   query isNewUser ($issuer : String!) {
     users(where: {issuer: {_eq: $issuer}}) {
@@ -31,11 +31,9 @@ export async function isNewUSer(token,issuer){
 `;
   
   const response =  await queryHasuraGQL(operationsDoc, "isNewUser",{ issuer},token);
+   
 
-
-   console.log(response.errors)
-
-  return response?.users?.length === 0
+   return response?.data?.users?.length === 0;
 
 }
 
@@ -55,5 +53,7 @@ async function queryHasuraGQL(operationsDoc, operationName, variables, token) {
 
   return await result.json();
 }
+
+export {isNewUser, createNewUser}
 
 
