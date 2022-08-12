@@ -1,6 +1,7 @@
 import { magicAdmin } from "../../libs/magic";
 import jwt from "jsonwebtoken";
 import { createNewUser, isNewUser } from "../../libs/db/hasura";
+import { setTokenCookie } from "../../libs/cookies";
 
 export default async function login(req, res) {
   if (req.method === "POST") {
@@ -24,7 +25,7 @@ export default async function login(req, res) {
         process.env.HASURA_GRAPHQL_JWT_SECRET
       );
         
-     console.log({token}) 
+      setTokenCookie(token,res);
 
       const isNewUserQuery = await isNewUser(token, metadata.issuer);
       isNewUserQuery && (await createNewUser(token, metadata));
