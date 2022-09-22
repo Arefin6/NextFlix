@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Modal from 'react-modal';
 import cls from "classnames";
@@ -38,14 +39,59 @@ const Video = ({video}) => {
     const [toggleLike, setToggleLike] = useState(false);
     const [toggleDisLike, setToggleDisLike] = useState(false);
 
-    const handleToggleLike = () =>{
-       setToggleLike(!toggleLike)
+   const getStatsData = async()=>{
+    const response = await fetch(`/api/stats?videoId=${videoId}`,{
+     method:"GET" 
+    });
+    const data = await response.json()
+    if(data.length >0){
+      const favourited = data[0].favourited;
+       
+      if(favourited === 0){
+        setToggleDisLike(true)
+      }
+      else if(favourited === 1){
+        setToggleLike(true)
+      }
+    } 
+   } 
+    
+
+   useEffect(()=>{
+     getStatsData();
+   },[]) 
+
+
+   const runRatingService = async (favourited) =>{
+    return await fetch('/api/stats',{
+      method:"POST",
+      body:JSON.stringify({
+        videoId,
+        favourited
+      }),
+      headers:{
+        "Content-Type": "application/json",
+       },
+     });
+   }
+
+
+    const handleToggleLike = async() =>{
+       const val =  !toggleLike
+       setToggleLike(val)
        setToggleDisLike(toggleLike)
+       const rating = val ? 1 :0
+       const response = await runRatingService(rating)  
+      
     } 
 
-    const handleToggleDisLike = () =>{
-       setToggleDisLike(!toggleDisLike)
+    const handleToggleDisLike = async () =>{
+      const val = !toggleDisLike
+       setToggleDisLike(val)
        setToggleLike(toggleDisLike)
+       const rating = val ? 0 :1
+       const response = await runRatingService(rating)  
+   
     }
 
     return (

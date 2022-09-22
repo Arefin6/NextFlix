@@ -1,3 +1,67 @@
+async function insertStats(
+  token,
+  { favourited, userId, watched, videoId }
+  ) {
+    const operationsDoc = `
+    mutation insertStats($favourited: Int!, $userId: 
+    String!, $watched: Boolean!, $videoId: String!) {
+      insert_stats_one(object: {favourited: $favourited, 
+      userId: $userId,
+       watched: $watched, 
+       videoId: $videoId}
+      ) {
+        favourited
+        id
+        userId
+      }
+    }
+    `;
+  return  await queryHasuraGQL(operationsDoc, "insertStats",{favourited, userId, watched, videoId },token);
+  }
+
+
+async function updateStats(
+token,
+{ favourited, userId, watched, videoId }
+) {
+const operationsDoc = `
+mutation updateStats( $favourited: Int!, $userId: String!, $watched: Boolean!, $videoId: String!) {
+update_stats(
+  _set: {watched: $watched, favourited: $favourited}, 
+  where: {
+    userId: {_eq: $userId}, 
+    videoId: {_eq: $videoId}
+  }) {
+  returning {
+    userId,
+    watched,
+    videoId,
+    favourited
+  }
+}
+}
+`;
+return  await queryHasuraGQL(operationsDoc, "updateStats",{favourited, userId, watched, videoId },token);
+}
+
+async function findVideoIdByUser(userId,videoId,token){
+  const operationsDoc = `
+  query findVideoByUserId($userId: String!,$videoId : String!) {
+    stats(where: {userId: {_eq: $userId}, videoId: {_eq:$videoId}}) {
+      id
+      favourited
+      userId
+      videoId
+      watched
+    }
+  }
+`;
+  const response =  await queryHasuraGQL(operationsDoc, "findVideoByUserId",{userId,videoId},token);
+  return response?.data?.stats
+}
+
+
+
 async function createNewUser(token,metadata){
   const operationsDoc = `
   mutation createNewUser($issuer: String!, $email: String!, $publicAddress: String!) {
@@ -12,10 +76,7 @@ async function createNewUser(token,metadata){
 `;
   const { issuer, email, publicAddress } = metadata;
   const response =  await queryHasuraGQL(operationsDoc, "createNewUser",{ email, issuer,publicAddress},token);
-   
-  console.log(response)
   return response
-
 }
 
 
@@ -54,6 +115,6 @@ async function queryHasuraGQL(operationsDoc, operationName, variables, token) {
   return await result.json();
 }
 
-export {isNewUser, createNewUser}
+export {isNewUser, createNewUser,findVideoIdByUser,updateStats,insertStats}
 
 
