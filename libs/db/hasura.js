@@ -60,6 +60,32 @@ async function findVideoIdByUser(userId,videoId,token){
   return response?.data?.stats
 }
 
+// watch it again
+
+export async function getWatchedVideos(userId, token) {
+  const operationsDoc = `
+  query watchedVideos($userId: String!) {
+    stats(where: {
+      watched: {_eq: true}, 
+      userId: {_eq: $userId},
+    }) {
+      videoId
+    }
+  }
+`;
+
+  const response = await queryHasuraGQL(
+    operationsDoc,
+    "watchedVideos",
+    {
+      userId,
+    },
+    token
+  );
+
+  return response?.data?.stats;
+}
+
 
 
 async function createNewUser(token,metadata){
