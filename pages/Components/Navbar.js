@@ -10,14 +10,17 @@ const Navbar = () => {
     const router = useRouter()
     const [showNavigation,setShowNavigation] = useState(false)
     const [userName,setUserName] = useState('')
+    const [didToken, setDidToken] = useState("");
 
 
     useEffect(()=>{
           const getUserData = async() =>{
             try {
               const {email} = await magic.user.getMetadata()
+              const didToken = await magic.user.getIdToken();
               if(email){
                 setUserName(email)
+                setDidToken(didToken)
               }
              } catch (error) {
               console.error("Error Retriving User Email",error)
@@ -26,17 +29,24 @@ const Navbar = () => {
           getUserData()
     },[]) 
 
-    const handleSignOut = async() =>{
+    const handleSignOut = async (e) => {
+      e.preventDefault();
+  
       try {
-        await magic.user.logout()
-        console.log(await magic.user.isLoggedIn())
-        router.push('/login')
+        const response = await fetch("/api/logout", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${didToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        const res = await response.json();
       } catch (error) {
-        console.error("Error Logout",error)
-        router.push('/login')
+        console.error("Error logging out", error);
+        router.push("/login");
       }
-
-    }
+    };
     const handleNavigateToHome = (e) =>{
       e.preventDefault()
       router.push('/')

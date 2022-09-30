@@ -1,4 +1,4 @@
-import { getWatchedVideos } from "./db/hasura";
+import { getMyListVideos, getWatchedVideos } from "./db/hasura";
 
 export const getCommonVideos = async (URL) => {
   try {
@@ -52,6 +52,16 @@ export const getYoutubeVideoById = (videoId) =>{
 }
 export const getWatchItAgainVideos = async (userId,token) =>{
   const videos = await getWatchedVideos(userId,token);
+  return videos?.map(video =>{
+    return{
+      id:video.videoId,
+      imgUrl: `https://i.ytimg.com/vi/${video.videoId}/maxresdefault.jpg`,
+    }
+  })
+}
+
+export const getMyList = async (userId,token) =>{
+  const videos = await getMyListVideos(userId,token);
   return videos?.map(video =>{
     return{
       id:video.videoId,

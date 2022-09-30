@@ -87,6 +87,33 @@ export async function getWatchedVideos(userId, token) {
 }
 
 
+// mny list query
+
+export async function getMyListVideos(userId, token) {
+  const operationsDoc = `
+  query favouritedVideos($userId: String!) {
+    stats(where: {
+      userId: {_eq: $userId}, 
+      favourited: {_eq: 1}
+    }) {
+      videoId
+    }
+  }
+`;
+
+  const response = await queryHasuraGQL(
+    operationsDoc,
+    "favouritedVideos",
+    {
+      userId,
+    },
+    token
+  );
+
+  return response?.data?.stats;
+}
+
+
 
 async function createNewUser(token,metadata){
   const operationsDoc = `
