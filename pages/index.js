@@ -15,17 +15,6 @@ export async function getServerSideProps(context) {
   const popularVideos = await getPopularVideos();
   const watchItAgainVideos = await getWatchItAgainVideos(userId,token);
 
-  if (!userId) {
-    return {
-      props: {},
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-
   return {
     props: { disneyVideos, productivityVideos, travelVideos, popularVideos,watchItAgainVideos },
   };

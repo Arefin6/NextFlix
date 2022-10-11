@@ -11,16 +11,6 @@ export async function getServerSideProps(context){
   const {userId,token}  = await redirectUser(context)  
   const myListVideos = await getMyList(userId,token);
 
-  if (!userId) {
-    return {
-      props: {},
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: { myListVideos},
   };
