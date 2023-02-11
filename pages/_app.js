@@ -2,6 +2,7 @@
 import '../styles/globals.css'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { magic } from "../libs/magic-Client";
 import Loading from './Components/Loading';
 
 function MyApp({ Component, pageProps }) {

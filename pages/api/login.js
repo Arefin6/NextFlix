@@ -25,10 +25,11 @@ export default async function login(req, res) {
         process.env.HASURA_GRAPHQL_JWT_SECRET
       );
         
-      setTokenCookie(token,res);
+      
 
       const isNewUserQuery = await isNewUser(token, metadata.issuer);
       isNewUserQuery && (await createNewUser(token, metadata));
+      setTokenCookie(token,res);
       res.send({ done: true });
     } catch (error) {
       console.error("Something went wrong logging in", error);

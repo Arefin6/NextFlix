@@ -76,7 +76,7 @@ const Navbar = () => {
         </header>
         <ul className={styles.navItems}>
           <li className={styles.navItem} onClick={handleNavigateToHome}>Home</li>
-          <li className={styles.navItem2} onClick={handleNavigateToMYList}>My List</li>
+          {/* <li className={styles.navItem2} onClick={handleNavigateToMYList}>My List</li> */}
         </ul>
         <nav className={styles.navContainer}>
           <div>

@@ -13,10 +13,10 @@ export async function getServerSideProps(context) {
   const productivityVideos = await getVideos("productivity");
   const travelVideos = await getVideos("travel");
   const popularVideos = await getPopularVideos();
-  const watchItAgainVideos = await getWatchItAgainVideos(userId,token);
+  // const watchItAgainVideos = await getWatchItAgainVideos(userId,token);
 
   return {
-    props: { disneyVideos, productivityVideos, travelVideos, popularVideos,watchItAgainVideos },
+    props: { disneyVideos, productivityVideos, travelVideos, popularVideos },
   };
 }
 
@@ -25,8 +25,7 @@ export default function Home({
   disneyVideos,
   productivityVideos,
   travelVideos,
-  popularVideos,
-  watchItAgainVideos
+  popularVideos
 })
 {
   return (
@@ -46,7 +45,7 @@ export default function Home({
         />
         <div className={styles.sectionWrapper}>
           <SectionCard title={"Disney"} videos={disneyVideos} size="large" />
-          <SectionCard title={"Watch It Again"} videos={watchItAgainVideos} size="small" />
+          {/* <SectionCard title={"Watch It Again"} videos={watchItAgainVideos} size="small" /> */}
           <SectionCard title={"Travel"} videos={travelVideos} size="small" />
           <SectionCard
             title={"Productivity"}

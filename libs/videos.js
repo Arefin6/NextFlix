@@ -54,7 +54,7 @@ export const getWatchItAgainVideos = async (userId,token) =>{
   const videos = await getWatchedVideos(userId,token);
   return videos?.map(video =>{
     return{
-      id:video.videoId,
+      id:video?.videoId,
       imgUrl: `https://i.ytimg.com/vi/${video.videoId}/maxresdefault.jpg`,
     }
   })

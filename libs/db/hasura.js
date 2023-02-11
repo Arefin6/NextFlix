@@ -83,11 +83,11 @@ export async function getWatchedVideos(userId, token) {
     token
   );
 
-  return response?.data?.stats;
+  return response?.data.stats;
 }
 
 
-// mny list query
+// my list query
 
 export async function getMyListVideos(userId, token) {
   const operationsDoc = `
@@ -112,9 +112,8 @@ export async function getMyListVideos(userId, token) {
 
   return response?.data?.stats;
 }
-
-
-
+   
+  
 async function createNewUser(token,metadata){
   const operationsDoc = `
   mutation createNewUser($issuer: String!, $email: String!, $publicAddress: String!) {
@@ -152,7 +151,7 @@ async function isNewUser(token,issuer){
 }
 
 async function queryHasuraGQL(operationsDoc, operationName, variables, token) {
-  const result = await fetch(process.env.NEXT_PUBLIC_HASURA_ADMIN_URl, {
+  const res = await fetch(process.env.NEXT_PUBLIC_HASURA_ADMIN_URl, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -165,7 +164,11 @@ async function queryHasuraGQL(operationsDoc, operationName, variables, token) {
     }),
   });
 
-  return await result.json();
+  console.log({res})
+
+  const result = await res.json();
+  
+  return result;
 }
 
 export {isNewUser, createNewUser,findVideoIdByUser,updateStats,insertStats}
